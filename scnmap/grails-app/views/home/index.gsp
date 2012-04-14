@@ -21,6 +21,12 @@
       <section id="nav" class="span3">
         <div class="well">
           Settings...
+          <ul>
+            <li>Activity</li>
+            <li>Interest</li>
+            <li>Support</li>
+            <li>Centre</li>
+          </ul>
         </div>
       </section>
     </div>
