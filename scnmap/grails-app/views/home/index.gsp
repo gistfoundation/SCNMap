@@ -43,41 +43,32 @@
         global_map = new google.maps.Map(document.getElementById("map"), myOptions);
 
         google.maps.event.addDomListener(global_map, 'idle', showMarkers);
-    
-        var marker = new google.maps.Marker({
-          position: myLatlng, 
-          title:"A title String"
-        });   
-
-        marker.setMap(global_map);  
       }
 
       function showMarkers() {
         var bounds = global_map.getBounds();
-        alert("Show markers "+bounds);
-
         var pl = $.ajax({
-          url:"http://localhost:8080/scnmap/home/poi?a=b&b=2",
-          jsonp:"update"
-        });
-
-        if( activity_entry_map['one'] == null ) {
-          alert("add");
-          // activity_entry_map['one'] = 'bleh'
-          var new_point =  new google.maps.LatLng(53.383,-1.466);
-          activity_entry_map['one'] = new google.maps.Marker({
-            position: new_point,
-            title:"New doodah"
-          });   
-          activity_entry_map['one'].setMap(global_map);
-        }
-        else {
-          // Already present
-        }
-      }
-
-      function update() {
-        alert("Update");
+          url:"http://localhost:8080/scnmap/home/poi"+
+            "?lat1="+bounds.getNorthEast().lat()+
+            "&lng1="+bounds.getNorthEast().lng()+
+            "&lat2="+bounds.getSouthWest().lat()+
+            "&lng2="+bounds.getSouthWest().lng(),
+          dataType:"jsonp",
+        }).done(
+          function fetchComplete(data) {
+            for ( i in data ) {
+              if ( activity_entry_map[data[i].id] == null ) {
+                alert("adding");
+                var new_point = new google.maps.LatLng(data[i].lat,data[i].lng);
+                activity_entry_map[data[i].id] = new google.maps.Marker({
+                  position: new_point,
+                  title:data[i].name
+                });   
+                activity_entry_map[data[i].id].setMap(global_map);
+              }
+            }
+          }
+        );
       }
 
       google.maps.event.addDomListener(window, 'load', map2);
