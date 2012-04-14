@@ -79,6 +79,11 @@ log4j = {
     //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
     //}
 
+    appenders {
+        console name: "stdout", threshold: org.apache.log4j.Level.ALL
+    }
+
+
     error  'org.codehaus.groovy.grails.web.servlet',  //  controllers
            'org.codehaus.groovy.grails.web.pages', //  GSP
            'org.codehaus.groovy.grails.web.sitemesh', //  layouts
@@ -90,6 +95,13 @@ log4j = {
            'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    debug  'grails.app.controllers',
+           'grails.app.services',
+           'grails.app.domain',
+           'grails.app.conf',
+           'grails.app.jobs'
+
 }
 
 // Added by the Spring Security Core plugin:

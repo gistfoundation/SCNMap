@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" href="${resource(dir: 'images', file: 'apple-touch-icon.png')}">
     <link rel="apple-touch-icon" sizes="72x72" href="${resource(dir: 'images', file: 'apple-touch-icon-72x72.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-114x114.png')}">
-
+    <link rel="stylesheet" href="${resource(dir:'css',file:'twitter-auth.css')}" />
     <g:layoutHead/>
     <r:layoutResources/>
   </head>
@@ -38,7 +38,7 @@
             <span class="icon-bar"></span>
           </a>
           
-          <a class="brand" href="${createLink(uri: '/')}">Grails Twitter Bootstrap</a>
+          <a class="brand" href="${createLink(uri: '/')}">GIST Cultural and Digital Activity Map</a>
 
           <div class="nav-collapse">
             <ul class="nav">              
@@ -59,6 +59,8 @@
                   </ul>
                 </li>
               </sec:ifAllGranted>
+
+              <li><twitterAuth:button/></li>
             </ul>
           </div>
         </div>
@@ -71,7 +73,7 @@
       <hr>
 
       <footer>
-        <p>&copy; Company 2011</p>
+        <p>&copy; <a href=http://thegisthub.net"">The GIST Foundation</a> 2012</p>
       </footer>
     </div>
 
