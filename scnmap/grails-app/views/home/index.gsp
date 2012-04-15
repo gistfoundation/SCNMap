@@ -13,8 +13,7 @@
 
         <div class="well">
           <h1>Sheffield Creative / Digital Network Activity Map</h1>
-          <div id="map" style="width: 100%; height: 600px">
-          </div>
+          <div id="map" style="width: 100%; height: 600px"/>
 
         </div>
           
@@ -135,12 +134,20 @@
         var myLatlng = new google.maps.LatLng(53.383611,-1.466944);
 
         var myOptions = {
-          zoom: 15,
           mapTypeControl: true,
           mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
           navigationControl: true,
           center: myLatlng,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          panControl: true,
+          zoomControl: true,
+          scaleControl: true,
+          streetViewControl: false,
+          overviewMapControl: false,
+          zoom: 15,
+          zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.SMALL
+          }
         }
 
         shadow_pin=createShadow();
@@ -168,10 +175,10 @@
           function fetchComplete(data) {
             for ( i in data ) {
               if ( activity_entry_map[data[i].id] == null ) {
-                var new_point = new google.maps.LatLng(data[i].lat,data[i].lng);
+                var new_point = new google.maps.LatLng(data[i].loc.lat,data[i].loc.lon);
                 activity_entry_map[data[i].id] = new google.maps.Marker({
                   position: new_point,
-                  title: data[i].name,
+                  title: data[i].title,
                   map: global_map
                   /*
                   icon: bright_red_pin,
