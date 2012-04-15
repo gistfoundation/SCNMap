@@ -38,17 +38,24 @@ environments {
     production {
         dataSource {
             dbCreate = "update"
-            url = "jdbc:h2:prodDb;MVCC=TRUE"
+            driverClassName = "com.mysql.jdbc.Driver"
+            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            dbCreate =  "update" // "create-drop"           // "create"
+            username = "k-int"
+            password = "k-int"
             pooled = true
+            url = "jdbc:mysql://localhost/scn?autoReconnect=true&amp;characterEncoding=utf8"
             properties {
                maxActive = -1
-               minEvictableIdleTimeMillis=1800000
-               timeBetweenEvictionRunsMillis=1800000
-               numTestsPerEvictionRun=3
-               testOnBorrow=true
-               testWhileIdle=true
-               testOnReturn=true
-               validationQuery="SELECT 1"
+                validationQuery="select 1"
+                testWhileIdle=true
+                minEvictableIdleTimeMillis=1800000
+                timeBetweenEvictionRunsMillis=1800000
+                numTestsPerEvictionRun=3
+                testOnBorrow=true
+                testWhileIdle=true
+                testOnReturn=true
+
             }
         }
     }
