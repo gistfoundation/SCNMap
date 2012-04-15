@@ -17,11 +17,18 @@ class HomeController {
     def mdb = mongoService.getMongo().getDB('comnet')
     log.debug("Get poi...${params}");
 
-    def box = [[Double.parseDouble(params.lat1), Double.parseDouble(params.lng1)], [Double.parseDouble(params.lat2),  Double.parseDouble(params.lng2)]]
-    def entries = mdb.entries.find(["loc" : ['$within' : ['$box' : box]]])
+    def entries = null;
+    if ( params.lat1 && params.lat2 && params.lng1 && params.lng2 ) {
+      def box = [[Double.parseDouble(params.lat1), Double.parseDouble(params.lng1)], [Double.parseDouble(params.lat2),  Double.parseDouble(params.lng2)]]
+      entries = mdb.entries.find(["loc" : ['$within' : ['$box' : box]]])
+    }
+    else {
+      entries = mdb.entries.findAll();
+    }
 
     def result = []
     entries.each { e ->
+      log.debug("adding ${e}");
       result.add(e);
     }
 

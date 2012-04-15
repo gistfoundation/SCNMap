@@ -108,3 +108,16 @@ log4j = {
 grails.plugins.springsecurity.userLookup.userDomainClassName = 'net.thegistgub.scnmap.Person'
 grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'net.thegistgub.scnmap.PersonRole'
 grails.plugins.springsecurity.authority.className = 'net.thegistgub.scnmap.Role'
+
+security {
+   twitter {
+        language = "en_UK"
+        button.text = "Login with Twitter"
+        popup = true
+
+        autoCreate {
+            active = true
+            roles = ["ROLE_USER", "ROLE_TWITTER"]
+        }
+    }
+}
