@@ -102,7 +102,8 @@
             </div>
 
             <div class="form-actions">
-              <button type="submit" class="btn disabled">Save!</button>
+              <!--btn disabled-->
+              <button type="submit" class="btn btn-primary">Save!</button>
               <button class="btn">Cancel</button>
             </div>
 
@@ -165,7 +166,7 @@
       function showMarkers() {
         var bounds = global_map.getBounds();
         var pl = $.ajax({
-          url:"http://localhost:8080/scnmap/home/poi"+
+          url:"${grailsApplication.config.serverbaseurl}/home/poi"+
             "?lat1="+bounds.getNorthEast().lat()+
             "&lng1="+bounds.getNorthEast().lng()+
             "&lat2="+bounds.getSouthWest().lat()+
