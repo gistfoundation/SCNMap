@@ -39,7 +39,7 @@
             </sec:ifNotLoggedIn>
           </div>
 
-        <form id="newentryform" style="display:none;" onSubmit="postNewEntry()">
+        <g:form name="newentryform" style="display:none;" onSubmit="postNewEntry()" method="post" controller="newentry" action="add">
           <fieldset>
             <legend>New Map Entry</legend>
 
@@ -48,7 +48,7 @@
                 <a href="#" rel="popover" title="Entry Short Code" data-content="A short code for this entry. This will be used to create a friendly URL for the item. Short codes should represent the item. for example, the GIST Lab has a shortcode of GISTLAB. Short codes should contain only numbers and letters, and no spaces or other punctuation">Short Code*</a>
               </label>
               <div class="controls">
-                <input type="text" class="input-xlarge" id="shortcode">
+                <input name="shortcode" type="text" class="input-xlarge" id="shortcode">
               </div>
             </div>
 
@@ -57,8 +57,8 @@
                 <a href="#" rel="popover" title="Entry Type" data-content="The Entry Type tells this directory what kind of information you want to list. If you are interested in being part of a project, or are about to start a project and are looking for collaborators, use an Intrest entry. For existing established centres use Existig Centre. For an existing activity, use Activity">Entry Type*</a>
               </label>
               <div class="controls">
-                <select id="entryTypeSelect">
-                  <option>Interest</option>
+                <select name="infotype" id="entryTypeSelect">
+                  <option>Adding My Interest</option>
                   <option>Existing Centre</option>
                   <option>Activity </option>
                 </select>
@@ -70,7 +70,7 @@
                 <a href="#" rel="popover" title="Title" data-content="A short descriptive title for this entry. This will be displayed on the Map. This can be organisation or activity names, or some other short dext that briefly explains what the entry is about">Title*</a>
               </label>
               <div class="controls">
-                <input type="text" class="input-xlarge" id="title">
+                <input name="title" type="text" class="input-xlarge" id="title">
               </div>
             </div>
 
@@ -79,7 +79,7 @@
                 <a href="#" rel="popover" title="URL" data-content="An optional URL">URL</a>
               </label>
               <div class="controls">
-                <input type="text" class="input-xlarge" id="url">
+                <input name="url" type="text" class="input-xlarge" id="url">
               </div>
             </div>
 
@@ -88,7 +88,7 @@
                 <a href="#" rel="popover" title="Contact Email" data-content="An optional Contact Email">Contact Email</a>
               </label>
               <div class="controls">
-                <input type="text" class="input-xlarge" id="contactemail">
+                <input name="contactemail" type="text" class="input-xlarge" id="contactemail">
               </div>
             </div>
 
@@ -98,7 +98,7 @@
                 <a href="#" rel="popover" title="Description" data-content="The full description for this item">Description</a>
               </label>
               <div class="controls">
-                <textarea class="input-xlarge" id="description" rows="3"></textarea>
+                <textarea name="description" class="input-xlarge" id="description" rows="3"></textarea>
               </div>
             </div>
 
@@ -113,10 +113,10 @@
 
           <div class="alert alert-information">After completing this basic information, more details can be added on the listing page</div>
 
-          <input type="hidden" name="newlat" value=""/>
-          <input type="hidden" name="newlon" value=""/>
+          <input id="latelem" type="hidden" name="lat"/>
+          <input id="lonelem" type="hidden" name="lng"/>
 
-        </form>
+        </g:form>
         </div>
 
       </section>
@@ -227,6 +227,8 @@
 
       function postNewEntry() {
         alert("New entry for "+global_new_pin.position);
+        $("#latelem").val(global_new_pin.position.lat());
+        $("#lonelem").val(global_new_pin.position.lng());
       }
 
       google.maps.event.addDomListener(window, 'load', map2);

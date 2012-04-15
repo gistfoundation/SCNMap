@@ -4,6 +4,8 @@ import grails.converters.*
 
 class HomeController {
 
+ def mongoService
+
   def index() {
     log.debug("Index...");
   }
@@ -12,7 +14,15 @@ class HomeController {
   // https://developers.google.com/maps/articles/toomanymarkers#viewportmarkermanagement
 
   def poi() {
+    def mdb = mongoService.getMongo().getDB('comnet')
     log.debug("Get poi...${params}");
+
+    def box = [[Double.parseDouble(params.lat1), Double.parseDouble(params.lng1)], [Double.parseDouble(params.lat2),  Double.parseDouble(params.lng2)]]
+    def entries = mdb.entries.find(["loc" : ['$within' : ['$box' : box]]])
+
+    entries.each { e ->
+      log.debug("Entry: ${e}");
+    }
 
     def result = [
       [

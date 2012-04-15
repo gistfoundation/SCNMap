@@ -14,6 +14,8 @@ class MongoService {
     options.autoConnectRetry = true
     options.slaveOk = true
     mongo = new com.gmongo.GMongo('127.0.0.1', options);
+
+    mongo.getDB('comnet').entries.ensureIndex(['loc':'2d']);
   }
 
   @javax.annotation.PreDestroy
