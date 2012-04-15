@@ -14,7 +14,7 @@
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
 
-    <r:require modules="scaffolding"/>
+    <r:require modules="scaffolding, popover, application"/>
 
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="${resource(dir: 'images', file: 'favicon.ico')}" type="image/x-icon">
@@ -22,6 +22,7 @@
     <link rel="apple-touch-icon" sizes="72x72" href="${resource(dir: 'images', file: 'apple-touch-icon-72x72.png')}">
     <link rel="apple-touch-icon" sizes="114x114" href="${resource(dir: 'images', file: 'apple-touch-icon-114x114.png')}">
     <link rel="stylesheet" href="${resource(dir:'css',file:'twitter-auth.css')}" />
+
     <g:layoutHead/>
     <r:layoutResources/>
   </head>
@@ -44,8 +45,8 @@
             <ul class="nav">              
               <li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
 
-
               <sec:ifAllGranted roles="ROLE_USER">
+                <!--
                 <li class="dropdown">
                   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
                   <ul class="dropdown-menu">
@@ -58,11 +59,20 @@
                     <li><g:link controller="Home" action="memberships">Request and Manage Memberships</g:link></li>
                   </ul>
                 </li>
+                -->
               </sec:ifAllGranted>
-
-              <li><twitterAuth:button/></li>
+              <sec:ifLoggedIn> 
+                <li><g:link controller="logout">logout</g:link></li>
+              </sec:ifLoggedIn> 
             </ul>
           </div>
+          
+          <span class="icon-bar">
+            <sec:ifNotLoggedIn> 
+              <twitterAuth:button/>
+            </sec:ifNotLoggedIn> 
+          </span>
+
         </div>
       </div>
     </nav>

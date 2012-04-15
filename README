@@ -1,0 +1,19 @@
+
+
+
+Notes for debian/ubuntu install
+
+Use the 10gen mongo:
+http://www.mongodb.org/display/DOCS/Ubuntu+and+Debian+packages
+
+Handy maps coding info
+http://econym.org.uk/gmap/
+
+Maps events:
+https://developers.google.com/maps/documentation/javascript/events
+
+Draggable markers
+http://googlemapsapi.blogspot.co.uk/2006/08/draggable-markers-and.html
+
+Fun posting on custom map functions
+http://artur.ejsmont.org/blog/content/google-maps-api-version-3-even-easier-than-before
