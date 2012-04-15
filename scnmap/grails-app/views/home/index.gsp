@@ -163,7 +163,6 @@
       }
 
       function showMarkers() {
-        alert("Show markers");
         var bounds = global_map.getBounds();
         var pl = $.ajax({
           url:"http://localhost:8080/scnmap/home/poi"+
@@ -175,7 +174,6 @@
         }).done(
           function fetchComplete(data) {
             for ( i in data ) {
-              alert("Adding "+i+" "+data[i]._id.inc+" "+data[i].title);
               if ( activity_entry_map[data[i]._id.inc] == null ) {
                 var new_point = new google.maps.LatLng(data[i].loc.lat,data[i].loc.lon);
                 activity_entry_map[data[i]._id.inc] = new google.maps.Marker({
@@ -190,7 +188,6 @@
                 /* activity_entry_map[data[i].id].setMap(global_map); */
               }
               else {
-                alert("exists");
               }
             }
           }
