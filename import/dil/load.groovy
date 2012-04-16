@@ -79,7 +79,9 @@ while ((nl = r.readNext()) != null) {
             postcode:nl[6]
         ]
       ]
+
       println("Adding new entry: ${new_entry}");
+      db.entries.save(new_entry);
     }
 
   }
