@@ -65,7 +65,19 @@ while ((nl = r.readNext()) != null) {
         url: nl[11],
         addedBy:'IMPORT',
         contact: nl[10],
-        loc:[ lat:Double.parseDouble(lat), lon:Double.parseDouble(lon) ]
+        loc:[ lat:Double.parseDouble(lat), lon:Double.parseDouble(lon) ],
+        provenance:[
+            description:"Digital Inclusion Locations South Yorkshire",
+            url:"http://www.google.com/fusiontables/DataSource?snapid=S250316U_WU",
+            license:"UNKNOWN"
+        ],
+        address:[
+            building:nl[2],
+            street:nl[3],
+            city:nl[5],
+            county:nl[5],
+            postcode:nl[6]
+        ]
       ]
       println("Adding new entry: ${new_entry}");
     }
