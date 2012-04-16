@@ -30,7 +30,49 @@ println("Processing ${args[0]}");
 CSVReader r = new CSVReader( new InputStreamReader(new FileInputStream(args[0])))
 
 String[] nl
+int i=0;
+
+// Skip header
+r.readNext()
 
 while ((nl = r.readNext()) != null) {
-  println("Processing ${nl}");
+  println("Processing [${i++}]");
+  //  Organiser,Detail,Building,Road/ Street,City,County,Postcode,Activity type (keywords),Activity,Contact tel,Contact email,Website,Open to public/ Call in advance,Lat/ Lang converter cell 1,Lat/ Lang converter cell 2 ,Latitude,Longitude,LatLng,Picture
+  // 1. Only process entries with an organiser, Detail, lat/long
+  def org = nl[0]
+  def dets = nl[1]
+  def lat = nl[15]
+  def lon = nl[16]
+  def loc = nl[17]
+  def pic = nl[18]
+
+  if ( ( lat && ( lat.trim().length() > 0 ) ) &&
+       ( lon && ( lon.trim().length() > 0 ) ) &&
+       ( org && ( org.trim().length() > 0 ) ) ) {
+    def new_shortcode = org.replaceAll(" ","_");
+
+    if ( db.entries.findOne([shortcode:new_shortcode]) ) {
+      println("Existing entry for ${new_shortcode}");
+    }
+    else {
+      println("Create new entry for ${new_shortcode}");
+      def new_entry = [
+        _id:new org.bson.types.ObjectId(),
+        shortcode:new_shortcode,
+        type: 'type',
+        title:org,
+        desc: dets,
+        url: nl[11],
+        addedBy:'IMPORT',
+        contact: nl[10],
+        loc:[ lat:Double.parseDouble(lat), lon:Double.parseDouble(lon) ]
+      ]
+      println("Adding new entry: ${new_entry}");
+    }
+
+  }
+  else {
+    println("Skipping resource : [${i}] ${org} - missing details");
+  }
+
 }
