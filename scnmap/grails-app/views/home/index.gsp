@@ -38,7 +38,7 @@
             </sec:ifNotLoggedIn>
           </div>
 
-        <g:form name="newentryform" style="display:none;" onSubmit="postNewEntry()" method="post" controller="newentry" action="add">
+        <g:form name="newentryform" style="display:none;" onSubmit="return postNewEntry();" method="post" controller="newentry" action="add">
           <fieldset>
             <legend>New Map Entry</legend>
 
@@ -104,7 +104,7 @@
 
             <div class="form-actions">
               <!--btn disabled-->
-              <button type="submit" class="btn btn-primary">Save!</button>
+              <button id="addSubmitButton" type="submit" class="btn disabled">Save!</button>
               <button class="btn">Cancel</button>
             </div>
 
@@ -131,6 +131,7 @@
       var global_new_pin;
       var bright_red_pin;
       var shadow_pin;
+      var valid = false;
 
       function map2() {
         var myLatlng = new google.maps.LatLng(53.383611,-1.466944);
@@ -226,6 +227,7 @@
               div.removeClass("error");
               div.addClass("success");
               div.find("span.help-inline").html("");
+              updateFormStatus(true);
             }
             else {
               // var div = $("#"+controlid).parents("div.control-group");
@@ -233,11 +235,37 @@
               div.removeClass("success");
               div.addClass("error");
               div.find("span.help-inline").html("Your chosen shortcode is already used. Please choose a different one. Hover over the \"Short Code*\" label for help.");
+              updateFormStatus(false);
             }
           }
         );
+
       }
  
+      function updateFormStatus(isValid) {
+        if ( isValid === true ) {
+          if ( valid === true ) {
+            // No change
+          }
+          else {
+            // Form has become valid. Enable submit button
+            $("#addSubmitButton").removeClass('disabled');
+            $("#addSubmitButton").addClass('btn-primary');
+            valid = true;
+          }
+        }
+        else {
+          if ( valid === true ) {
+            // Form has become invalid. Disable submit button
+            $("#addSubmitButton").removeClass('btn-primary');
+            $("#addSubmitButton").addClass('disabled');
+            valid = false;
+          }
+          else {
+            // no change
+          }
+        }
+      }
 
       function singleClick(event) {
         
@@ -249,22 +277,31 @@
           $("#message").html("<div class='alert alert-success'><b>You can refine the location of the pin for this entry on the map opposite before clicking save</b></div>");
           $("#newentryform").show();
           var location = event.latLng;
-          var marker = new google.maps.Marker({
+          if ( global_new_pin ) {
+            // Already adding, so do nothing
+          }
+          else {
+            global_new_pin = new google.maps.Marker({
                 position: location, 
                 title: "New Title",
                 map: global_map,
                 icon: bright_red_pin,
                 draggable: true,
                 map: global_map
-          });
-          // global_map.setCenter(location);
-          global_new_pin = marker;
+            });
+          }
         </sec:ifLoggedIn>
       }
 
       function postNewEntry() {
-        $("#latelem").val(global_new_pin.position.lat());
-        $("#lonelem").val(global_new_pin.position.lng());
+        if ( valid ) {
+          $("#latelem").val(global_new_pin.position.lat());
+          $("#lonelem").val(global_new_pin.position.lng());
+
+          // Clear down the global pin so we can reuse it.
+          global_new_pin = null;
+        }
+        return valid;
       }
 
       google.maps.event.addDomListener(window, 'load', map2);
