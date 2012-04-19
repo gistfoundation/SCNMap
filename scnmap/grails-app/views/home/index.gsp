@@ -3,7 +3,7 @@
   <head>
     <meta name="layout" content="bootstrap"/>
     <title>The Cultural and Digital Activity Map</title>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script> 
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvPz19It4H7sZIsLr-e4Zv-5sYcpiWtKA&sensor=false"></script> 
   </head>
 
   <body>
@@ -165,6 +165,10 @@
         $("a[rel=popover]").popover({animation:true, placement:'left'})
       }
 
+      var infowindow = new google.maps.InfoWindow({
+          content: "empty"
+      });
+
       function showMarkers() {
         var bounds = global_map.getBounds();
         var pl = $.ajax({
@@ -179,16 +183,23 @@
             for ( i in data ) {
               if ( activity_entry_map[data[i]._id.inc] == null ) {
                 var new_point = new google.maps.LatLng(data[i].loc.lat,data[i].loc.lon);
-                activity_entry_map[data[i]._id.inc] = new google.maps.Marker({
+                var marker = new google.maps.Marker({
                   _id: data[i]._id.inc,
                   position: new_point,
                   title: data[i].title,
                   map: global_map
-                  /*
-                  icon: bright_red_pin,
-                  shadow: shadow_pin, */
                 });   
-                /* activity_entry_map[data[i].id].setMap(global_map); */
+
+                activity_entry_map[data[i]._id.inc] = marker;
+
+                google.maps.event.addListener(marker, 'click', function(event) {
+                  console.log("Marker Event: %o",event);
+                  // https://developers.google.com/maps/documentation/javascript/reference#InfoWindow
+                  infowindow.setContent("blah");
+                  infowindow.setPosition(event.latLng);
+                  infowindow.open(global_map);
+                });
+
               }
               else {
               }
