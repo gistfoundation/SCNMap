@@ -1,13 +1,28 @@
 package scnmap
 
 import grails.converters.*
+import com.k_int.vfis.*
+import com.k_int.vfis.auth.*
+import net.thegistgub.scnmap.*
+
+import grails.plugins.springsecurity.Secured
+
 
 class HomeController {
 
- def mongoService
+  def mongoService
+  def springSecurityService
+
 
   def index() {
-    log.debug("Index...");
+    log.debug("Index... p=${springSecurityService.principal}");
+    def result = [:]
+    if ( springSecurityService.principal instanceof String ) {
+    }
+    else {
+      result.user = Person.get(springSecurityService.principal.id)
+    }
+    result;
   }
 
 

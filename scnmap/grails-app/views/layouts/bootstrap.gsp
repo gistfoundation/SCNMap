@@ -62,16 +62,21 @@
                   </li>
                   -->
                 </sec:ifAllGranted>
-                <li><g:link controller="logout">logout</g:link></li>
               </sec:ifLoggedIn> 
             </ul>
+
+            <ul class="nav pull-right">
+              <sec:ifLoggedIn> 
+                <li><p class="navbar-text">Logged in as ${user?.username}</p></li>
+                <li><g:link controller="logout">logout</g:link></li>
+              </sec:ifLoggedIn> 
+              <sec:ifNotLoggedIn> 
+                <li>
+                  <twitterAuth:button/>
+                </li>
+              </sec:ifNotLoggedIn> 
+            </ul>
           </div>
-          
-          <span class="icon-bar">
-            <sec:ifNotLoggedIn> 
-              <twitterAuth:button/>
-            </sec:ifNotLoggedIn> 
-          </span>
 
         </div>
       </div>
