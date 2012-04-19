@@ -211,6 +211,17 @@
         new google.maps.Point(12, 35));
         return pinShadow;
       }
+
+      function checkUnique(value, controlid) {
+        var pl = $.ajax({
+          url:"${grailsApplication.config.serverbaseurl}/validation?field=shortcode&value="+value,
+          datatype:"jsonp"
+        )).done (
+          function fetchComplete(data) {
+            // Set controlid style
+          }
+        );
+      }
  
 
       function singleClick(event) {
