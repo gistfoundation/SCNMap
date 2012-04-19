@@ -47,7 +47,8 @@
                 <a href="#" rel="popover" title="Entry Short Code" data-content="A short code for this entry. This will be used to create a friendly URL for the item. Short codes should represent the item. for example, the GIST Lab has a shortcode of GISTLAB. Short codes should contain only numbers and letters, and no spaces or other punctuation">Short Code*</a>
               </label>
               <div class="controls">
-                <input name="shortcode" type="text" class="input-xlarge" id="shortcode">
+                <input name="shortcode" type="text" class="input-xlarge" id="shortcode" onKeyUp="javascript:checkUnique('shortcode','shortcode');">
+                <span class="help-inline"/>
               </div>
             </div>
 
@@ -212,13 +213,27 @@
         return pinShadow;
       }
 
-      function checkUnique(value, controlid) {
+      function checkUnique(fieldname, controlid) {
+        var value=$('#'+controlid).val()
         var pl = $.ajax({
-          url:"${grailsApplication.config.serverbaseurl}/validation?field=shortcode&value="+value,
-          datatype:"jsonp"
-        )).done (
+          url:"${grailsApplication.config.serverbaseurl}/validation/index?field="+fieldname+"&value="+value,
+          dataType:"json"
+        }).done (
           function fetchComplete(data) {
-            // Set controlid style
+            if ( data.result === true ) {
+              // var div = $("#"+controlid).parents("div.control-group");
+              var div = $("#"+controlid).parent().parent();
+              div.removeClass("error");
+              div.addClass("success");
+              div.find("span.help-inline").html("");
+            }
+            else {
+              // var div = $("#"+controlid).parents("div.control-group");
+              var div = $("#"+controlid).parent().parent();
+              div.removeClass("success");
+              div.addClass("error");
+              div.find("span.help-inline").html("Your chosen shortcode is already used. Please choose a different one. Hover over the \"Short Code*\" label for help.");
+            }
           }
         );
       }

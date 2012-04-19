@@ -45,23 +45,23 @@
             <ul class="nav">              
               <li<%= request.forwardURI == "${createLink(uri: '/')}" ? ' class="active"' : '' %>><a href="${createLink(uri: '/')}">Home</a></li>
 
-              <sec:ifAllGranted roles="ROLE_USER">
-                <!--
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><g:link controller="Home" action="index">My Dashboard</g:link></li>
-                  </ul>
-                </li>
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Your Organisations<b class="caret"></b></a>
-                  <ul class="dropdown-menu">
-                    <li><g:link controller="Home" action="memberships">Request and Manage Memberships</g:link></li>
-                  </ul>
-                </li>
-                -->
-              </sec:ifAllGranted>
               <sec:ifLoggedIn> 
+                <sec:ifAllGranted roles="ROLE_USER">
+                  <!--
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Actions <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><g:link controller="Home" action="index">My Dashboard</g:link></li>
+                    </ul>
+                  </li>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Your Organisations<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                      <li><g:link controller="Home" action="memberships">Request and Manage Memberships</g:link></li>
+                    </ul>
+                  </li>
+                  -->
+                </sec:ifAllGranted>
                 <li><g:link controller="logout">logout</g:link></li>
               </sec:ifLoggedIn> 
             </ul>
