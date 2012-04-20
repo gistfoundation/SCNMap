@@ -197,7 +197,7 @@
                 google.maps.event.addListener(marker, 'click', function(event) {
                   console.log("Marker Event: %o",event);
                   // https://developers.google.com/maps/documentation/javascript/reference#InfoWindow
-                  infowindow.setContent("blah");
+                  infowindow.setContent(""+this._id);
                   infowindow.setPosition(event.latLng);
                   infowindow.open(global_map);
                 });

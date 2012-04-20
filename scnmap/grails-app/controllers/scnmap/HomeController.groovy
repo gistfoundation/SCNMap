@@ -29,22 +29,27 @@ class HomeController {
   // https://developers.google.com/maps/articles/toomanymarkers#viewportmarkermanagement
 
   def poi() {
-    def mdb = mongoService.getMongo().getDB('comnet')
-    // log.debug("Get poi...${params}");
-
-    def entries = null;
-    if ( params.lat1 && params.lat2 && params.lng1 && params.lng2 ) {
-      def box = [[Double.parseDouble(params.lat1), Double.parseDouble(params.lng1)], [Double.parseDouble(params.lat2),  Double.parseDouble(params.lng2)]]
-      entries = mdb.entries.find(["loc" : ['$within' : ['$box' : box]]])
-    }
-    else {
-      entries = mdb.entries.findAll();
-    }
-
     def result = []
-    entries.each { e ->
-      // log.debug("adding ${e}");
-      result.add(e);
+    try {
+      def mdb = mongoService.getMongo().getDB('comnet')
+      // log.debug("Get poi...${params}");
+
+      def entries = null;
+      if ( params.lat1 && params.lat2 && params.lng1 && params.lng2 ) {
+        def box = [[Double.parseDouble(params.lat1), Double.parseDouble(params.lng1)], [Double.parseDouble(params.lat2),  Double.parseDouble(params.lng2)]]
+        entries = mdb.entries.find(["loc" : ['$within' : ['$box' : box]]])
+      }
+      else {
+        entries = mdb.entries.findAll();
+      }
+
+      entries.each { e ->
+        // log.debug("adding ${e}");
+        result.add(e);
+      }
+    }
+    catch ( Exception e ) {
+      log.error("Problem with spatial query, params: ${params}",e);
     }
 
     if ( params.callback )
