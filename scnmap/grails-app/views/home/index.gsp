@@ -4,6 +4,9 @@
     <meta name="layout" content="bootstrap"/>
     <title>The Cultural and Digital Activity Map</title>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvPz19It4H7sZIsLr-e4Zv-5sYcpiWtKA&sensor=false"></script> 
+    <style type="text/css">
+      #map img { max-width: none; }
+    </style>
   </head>
 
   <body>
@@ -13,8 +16,7 @@
 
         <div class="well">
           <h1>Sheffield Creative / Digital Network Activity Map</h1>
-          <div id="map" style="width: 100%; height: 600px"/>
-
+          <div id="map" style="width: auto; height: 600px;"/>
         </div>
           
       </section>
@@ -149,7 +151,7 @@
           overviewMapControl: false,
           zoom: 15,
           zoomControlOptions: {
-            style: google.maps.ZoomControlStyle.SMALL
+            style: google.maps.ZoomControlStyle.MEDIUM
           }
         }
 
