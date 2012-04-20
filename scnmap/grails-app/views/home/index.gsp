@@ -189,15 +189,29 @@
                   _id: data[i]._id.inc,
                   position: new_point,
                   title: data[i].title,
+                  sourcedata: data[i],
                   map: global_map
                 });   
+  
+                  // desc: data[i].desc,
+                  // url: data[i].url,
+                  // addedBy: data[i].addedBy,
+                  // shortcode: data[i].shortcode,
+                  // contact: data[i].contact,
+                  // provenance: data[i].provean,
+                  // address: data[i].contact,
 
                 activity_entry_map[data[i]._id.inc] = marker;
 
                 google.maps.event.addListener(marker, 'click', function(event) {
                   console.log("Marker Event: %o",event);
                   // https://developers.google.com/maps/documentation/javascript/reference#InfoWindow
-                  infowindow.setContent(""+this._id);
+                  infowindow.setContent("<h1>"+this.title+"</h1>"+
+                                        "<div class=\"well\">"+
+                                        this.sourcedata.desc+
+                                        "<br/>Added By:"+this.sourcedata.addedBy+
+                                        "The content<br/>More content<br/>More Content"+
+                                        "</div>");
                   infowindow.setPosition(event.latLng);
                   infowindow.open(global_map);
                 });

@@ -40,7 +40,7 @@ class HomeController {
         entries = mdb.entries.find(["loc" : ['$within' : ['$box' : box]]])
       }
       else {
-        entries = mdb.entries.findAll();
+        entries = mdb.entries.find();
       }
 
       entries.each { e ->
