@@ -203,14 +203,16 @@
 
                 activity_entry_map[data[i]._id.inc] = marker;
 
+                console.log("Adding listener for "+data[i].title+" - "+data[i].shortcode);
+
                 google.maps.event.addListener(marker, 'click', function(event) {
-                  console.log("Marker Event: %o",event);
-                  // https://developers.google.com/maps/documentation/javascript/reference#InfoWindow
                   infowindow.setContent("<h1>"+this.title+"</h1>"+
                                         "<div class=\"well\">"+
                                         this.sourcedata.desc+
+                                        ( this.sourcedata.url ? '<br/>URL: <a href=\"'+this.sourcedata.url+'\">'+this.sourcedata.url+'</a>' : '' ) +
+                                        ( this.sourcedata.contact ? '<br/>Contact Details: '+this.sourcedata.contact : '' ) +
+                                        "<br/><a href='${grailsApplication.config.serverbaseurl}/entry/"+this.sourcedata.shortcode+"'>Entry for "+this.title+" on SCN network map</a>"+
                                         "<br/>Added By:"+this.sourcedata.addedBy+
-                                        "The content<br/>More content<br/>More Content"+
                                         "</div>");
                   infowindow.setPosition(event.latLng);
                   infowindow.open(global_map);

@@ -6,6 +6,9 @@ class UrlMappings {
 				// apply constraints here
 			}
 		}
+                
+                "/entry/${id}"(controller:'entry', action:'index')
+                 
 
 		"/"(controller:'home', action:"index")
 

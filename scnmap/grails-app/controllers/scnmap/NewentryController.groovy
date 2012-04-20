@@ -37,6 +37,9 @@ class NewentryController {
           url:params.url,
           addedBy:user.username,
           contact:params.contactemail,
+          provenance:[
+            description:"Added by twitter user ${user.username}"
+          ],
           loc:[ lat:Double.parseDouble(params.lat), lon:Double.parseDouble(params.lng) ]
         ]
   
